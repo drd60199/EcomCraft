@@ -1,0 +1,15 @@
+# Ignore dependencies
+node_modules
+
+# Ignore build artifacts
+build
+dist
+
+# Ignore source control and development files
+.git
+.gitignore
+.env
+.vscode
+
+# Ignore system files
+.DS_Store

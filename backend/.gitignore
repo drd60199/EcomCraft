@@ -1,0 +1,11 @@
+# Ignore Node.js dependencies
+node_modules
+
+# Ignore temporary files, logs, and other build artifacts
+*.log
+/logs
+/tmp
+.env
+
+# Ignore IDE and editor-specific files
+.vscode

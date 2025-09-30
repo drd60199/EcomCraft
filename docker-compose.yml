@@ -1,0 +1,32 @@
+services:
+  # The frontend service builds the React app and serves it with NGINX.
+  # It is not exposed to the host directly, as the NGINX container will proxy requests to it.
+  frontend:
+    build: ./frontend
+    # container_name: frontend. let Docker handle naming
+    restart: always
+
+  # The backend service builds the Node.js/Express API.
+  # It is also not exposed to the host directly. NGINX will proxy to it.
+  backend:
+    build: ./backend
+    # container_name: backend. let Docker handle naming
+    restart: always
+    env_file:
+      - .env
+    expose:
+      - "3000"
+
+  # The NGINX service acts as a reverse proxy, routing traffic to the frontend and backend services.
+  # It is the only service that needs to be exposed to the host machine.
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_proxy
+    ports:
+      - "80:80"  # Map host port 80 to NGINX port 80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    # `depends_on` ensures that the frontend and backend services are started before NGINX.
+    depends_on:
+      - frontend
+      - backend
